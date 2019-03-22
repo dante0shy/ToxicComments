@@ -157,3 +157,4 @@ venv.bak/
 # mypy
 .mypy_cache/
 
+embedding/glove.840B.300d.txt
