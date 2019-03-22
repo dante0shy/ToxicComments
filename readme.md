@@ -1,9 +1,10 @@
 ToxicComments
 
-performance:
+performance,train time iteration 319142:
 
     bi-lstm 0.98439
-    bi-lstm-deep conv 0.98139
+    double bi-lstm 0.98351 (effect of two biLSTM is not sofficient)
+    bi-lstm-deep conv 0.98081 (overfit)
     lstm 0.98140
 
 report:
