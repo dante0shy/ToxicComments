@@ -21,7 +21,9 @@ report:
                     word embedding: https://towardsdatascience.com/introduction-to-word-embedding-and-word2vec-652d0c2060fa
                     GloVe: embedding/glove.pdf
                     keras: https://keras.io/zh/preprocessing/text/
-    
+    network:        tokenize -> word embedding -> (bi-lstm or lstm) -> CNN (3*3) (or deeper, see lstm_keras.py) -> 6 binary sigmoid for classify
+
+ 
                             
     
     
