@@ -8,11 +8,13 @@ from keras.models import Model
 import tensorflow as tf
 import keras.backend.tensorflow_backend as KTF
 
+#kears config
 config = tf.ConfigProto()
 config.gpu_options.allow_growth = True
 session = tf.Session(config=config)
 KTF.set_session(session)
 
+#path for data and usage tool
 EMBEDDING_FILE = '/home/dante0shy/PycharmProjects/ToxicComments/embedding/glove.840B.300d.txt'
 train_x = pd.read_csv('/home/dante0shy/PycharmProjects/ToxicComments/data/train.csv', index_col='id').fillna(" ")
 test_x = pd.read_csv('/home/dante0shy/PycharmProjects/ToxicComments/data/test.csv', index_col='id').fillna(" ")
@@ -21,6 +23,7 @@ max_features = 100000
 maxlen = 150
 embed_size = 300
 
+#preprocess the data 
 train_x['comment_text'].fillna(' ')
 test_x['comment_text'].fillna(' ')
 train_y = train_x[['toxic', 'severe_toxic', 'obscene', 'threat', 'insult', 'identity_hate']].values
@@ -59,10 +62,11 @@ for word, i in word_index.items():
 
 # Build Model
 inp = Input(shape=(maxlen,))
-
+# Word Embedding
 x = Embedding(max_features, embed_size, weights=[embedding_matrix], trainable=True)(inp)
 x = SpatialDropout1D(0.35)(x)
 
+# BiLSTM & CNN
 x = Bidirectional(LSTM(256, return_sequences=True, dropout=0.15, recurrent_dropout=0.15))(x)
 # x = LSTM(256, return_sequences=True, dropout=0.15, recurrent_dropout=0.15)(x)
 x = Bidirectional(LSTM(256, return_sequences=True, dropout=0.15, recurrent_dropout=0.15))(x)
@@ -80,7 +84,6 @@ out = Dense(6, activation='sigmoid')(x)
 model = Model(inp, out)
 
 from keras.callbacks import EarlyStopping, ModelCheckpoint, LearningRateScheduler
-
 early_stop = EarlyStopping(monitor = "accuracy", mode = "min", patience = 5)
 model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 
@@ -88,9 +91,11 @@ model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy']
 batch_size = 64
 epochs = 2
 
+#fit the data
 model.fit(train_x, train_y, batch_size=batch_size, epochs=epochs, verbose=1, callbacks = [ early_stop])
 predictions = model.predict(test_x, batch_size=batch_size, verbose=1)
 
+#Create submission file
 submission = pd.read_csv('/home/dante0shy/PycharmProjects/ToxicComments/data/sample_submission.csv')
 submission[['toxic', 'severe_toxic', 'obscene', 'threat', 'insult', 'identity_hate']] = predictions
 submission.to_csv('submission.csv', index=False)
