@@ -1,13 +1,14 @@
 ToxicComments
+=====
 
-performance,train time iteration 319142:
+####performance,train time iteration 319142:
 
     bi-lstm 0.98439
     double bi-lstm 0.98351 (effect of two biLSTM is not sofficient)
     bi-lstm-deep conv 0.98081 (overfit)
     lstm 0.98140
 
-report:
+####report:
     
     competition:    https://www.kaggle.com/c/jigsaw-toxic-comment-classification-challenge/overview
     evaluation:     6 class each binary, 
