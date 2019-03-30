@@ -67,13 +67,23 @@ x = Embedding(max_features, embed_size, weights=[embedding_matrix], trainable=Tr
 x = SpatialDropout1D(0.35)(x)
 
 # BiLSTM & CNN
+#BiLSTM
 x = Bidirectional(LSTM(256, return_sequences=True, dropout=0.15, recurrent_dropout=0.15))(x)
-# x = LSTM(256, return_sequences=True, dropout=0.15, recurrent_dropout=0.15)(x)
-x = Bidirectional(LSTM(256, return_sequences=True, dropout=0.15, recurrent_dropout=0.15))(x)
+x = Conv1D(64, kernel_size=3, padding='valid', kernel_initializer='glorot_uniform')(x)
+#Double BiLSTM
+# x = Bidirectional(LSTM(256, return_sequences=True, dropout=0.15, recurrent_dropout=0.15))(x)
+# x = Bidirectional(LSTM(256, return_sequences=True, dropout=0.15, recurrent_dropout=0.15))(x)
+# x = Conv1D(64, kernel_size=3, padding='valid', kernel_initializer='glorot_uniform')(x)
+#BiLSTM deep conv
+# x = Bidirectional(LSTM(256, return_sequences=True, dropout=0.15, recurrent_dropout=0.15))(x)
 # x = Conv1D(256, kernel_s5ize=3, padding='same', kernel_initializer='glorot_uniform')(x)
 # x = Conv1D(128, kernel_size=3, padding='same', kernel_initializer='glorot_uniform')(x)
 # x = Conv1D(64, kernel_size=3, padding='same', kernel_initializer='glorot_uniform')(x)
-x = Conv1D(64, kernel_size=3, padding='valid', kernel_initializer='glorot_uniform')(x)
+# x = Conv1D(64, kernel_size=3, padding='valid', kernel_initializer='glorot_uniform')(x)
+# LSTM 
+# x = LSTM(256, return_sequences=True, dropout=0.15, recurrent_dropout=0.15)(x)
+# x = Conv1D(64, kernel_size=3, padding='valid', kernel_initializer='glorot_uniform')(x)
+
 
 avg_pool = GlobalAveragePooling1D()(x)
 max_pool = GlobalMaxPooling1D()(x)
