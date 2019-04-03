@@ -16,7 +16,7 @@ data :
     
 label:
     
-    original label : train_val/label.csv
+    original label : train_val/origin_label.csv
     finial label : train_val/label.csv
 
 performance,train time iteration 319142:
